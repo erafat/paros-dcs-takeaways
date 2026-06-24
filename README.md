@@ -6,7 +6,7 @@ Static, GitHub Pages-ready site for sharing an authored navigation and discussio
 
 - `index.html` - static page shell.
 - `styles.css` - visual system and responsive layout.
-- `app.js` - search, filters, selected-talk panel, and takeaway-outline builder.
+- `app.js` - search, filters, selected-talk panel, and chapter navigation.
 - `assets/vod-catalog.js` - share-safe public metadata generated from the local VOD manifest.
 - `assets/chapter-texts.js` - draft share-safe synthesis text generated from the private transcript set.
 

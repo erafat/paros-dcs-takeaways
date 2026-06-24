@@ -5,7 +5,6 @@ const state = {
   filter: "all",
   query: "",
   selectedTalk: null,
-  set: JSON.parse(localStorage.getItem("paros-dcs-selection") || "[]"),
 };
 
 const els = {
@@ -17,13 +16,6 @@ const els = {
   detailMeta: document.querySelector("#detailMeta"),
   detailPrompt: document.querySelector("#detailPrompt"),
   officialLink: document.querySelector("#officialLink"),
-  addSelected: document.querySelector("#addSelected"),
-  selectedList: document.querySelector("#selectedList"),
-  selectionCount: document.querySelector("#selectionCount"),
-  outlineBox: document.querySelector("#outlineBox"),
-  copyOutline: document.querySelector("#copyOutline"),
-  copyStatus: document.querySelector("#copyStatus"),
-  clearSelection: document.querySelector("#clearSelection"),
   chapterTabs: document.querySelector("#chapterTabs"),
   chapterReader: document.querySelector("#chapterReader"),
 };
@@ -80,98 +72,6 @@ function chooseTalk(talk) {
   els.detailPrompt.textContent = talk.usePrompt;
   els.officialLink.href = talk.pageUrl;
   els.officialLink.setAttribute("aria-disabled", "false");
-  els.addSelected.disabled = false;
-}
-
-function addCurrentTalk() {
-  if (!state.selectedTalk) return;
-  if (!state.set.some((talk) => talk.id === state.selectedTalk.id)) {
-    state.set.push(state.selectedTalk);
-    persistSelection();
-  }
-}
-
-function removeTalk(id) {
-  state.set = state.set.filter((talk) => talk.id !== id);
-  persistSelection();
-}
-
-function persistSelection() {
-  localStorage.setItem("paros-dcs-selection", JSON.stringify(state.set));
-  renderSelection();
-}
-
-function renderSelection() {
-  els.selectionCount.textContent = `${state.set.length} selected`;
-  els.selectedList.innerHTML = "";
-
-  if (!state.set.length) {
-    const empty = document.createElement("li");
-    empty.textContent = "Select talks from the catalog to build an agenda.";
-    els.selectedList.appendChild(empty);
-  } else {
-    for (const talk of state.set) {
-      const item = document.createElement("li");
-      item.innerHTML = `
-        <span>${escapeHtml(talk.idx)}. ${escapeHtml(talk.title)}</span>
-        <button type="button" aria-label="Remove ${escapeHtml(talk.title)}">Remove</button>
-      `;
-      item.querySelector("button").addEventListener("click", () => removeTalk(talk.id));
-      els.selectedList.appendChild(item);
-    }
-  }
-
-  els.outlineBox.value = buildOutline();
-}
-
-function buildOutline() {
-  if (!state.set.length) {
-    return "DCS Takeaway Discussion Set\\n\\n1. Select 3-7 talks from the catalog.\\n2. Use this box as the agenda seed.\\n3. Replace catalog prompts with your own final takeaways after review.";
-  }
-
-  const grouped = state.set.reduce((acc, talk) => {
-    acc[talk.category] ||= [];
-    acc[talk.category].push(talk);
-    return acc;
-  }, {});
-
-  const lines = [
-    "DCS Takeaway Discussion Set",
-    "",
-    "Purpose:",
-    "- Translate selected PAROS DCS/SEEG talks into practical clinical, teaching, or research takeaways.",
-    "",
-    "Selected talks:",
-  ];
-
-  for (const [category, categoryTalks] of Object.entries(grouped)) {
-    lines.push("", category);
-    for (const talk of categoryTalks) {
-      lines.push(`- ${talk.title}${talk.speaker ? ` | ${talk.speaker}` : ""}`);
-      lines.push(`  Use: ${talk.usePrompt}`);
-      lines.push(`  Official page: ${talk.pageUrl}`);
-    }
-  }
-
-  lines.push(
-    "",
-    "Discussion prompts:",
-    "- What should change in our stimulation protocol, bedside questioning, or interpretation language?",
-    "- Which findings are ready for clinical use, and which are hypothesis-generating?",
-    "- What one local project or quality-improvement question follows from this set?",
-    "",
-    "Sharing note:",
-    "- Share authored takeaways and teaching notes. Do not redistribute raw videos or transcripts without permission."
-  );
-
-  return lines.join("\\n");
-}
-
-function copyOutline() {
-  navigator.clipboard.writeText(els.outlineBox.value).then(() => {
-    els.copyStatus.textContent = "Outline copied.";
-    window.setTimeout(() => (els.copyStatus.textContent = ""), 1800);
-  });
 }
 
 function renderChapters() {
@@ -225,13 +125,5 @@ for (const chip of els.filters) {
   });
 }
 
-els.addSelected.addEventListener("click", addCurrentTalk);
-els.copyOutline.addEventListener("click", copyOutline);
-els.clearSelection.addEventListener("click", () => {
-  state.set = [];
-  persistSelection();
-});
-
 renderCatalog();
-renderSelection();
 renderChapters();

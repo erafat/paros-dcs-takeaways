@@ -19,7 +19,6 @@
           <a href="#catalog">Catalog</a>
           <a href="#chapters">Chapters</a>
           <a href="#use">How to use</a>
-          <a href="#builder">Takeaway builder</a>
         </div>
       </nav>
     </header>
@@ -32,7 +31,7 @@
           <p class="lede">A lightweight colleague-facing map of 56 VOD talks: foundations, elicited symptoms, ROI patterns, guidelines, data sharing, and ongoing projects.</p>
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Browse the talks</a>
-            <a class="button secondary" href="#builder">Build a discussion set</a>
+            <a class="button secondary" href="#chapters">Read chapter drafts</a>
           </div>
         </div>
         <aside class="hero-panel" aria-label="Collection summary">
@@ -66,8 +65,8 @@
           </article>
           <article>
             <span>04</span>
-            <h3>Team discussion</h3>
-            <p>Select 3-7 talks, copy the generated discussion outline, and use it as the agenda for a focused epilepsy surgery team session.</p>
+            <h3>Team teaching</h3>
+            <p>Use the chapter drafts as a starting point for a focused epilepsy surgery team discussion, then revise the language before sharing broadly.</p>
           </article>
         </div>
       </section>
@@ -104,7 +103,6 @@
             <p id="detailMeta">Click any card to see how it can fit a teaching or discussion plan.</p>
             <p id="detailPrompt"></p>
             <div class="detail-actions">
-              <button class="button primary" id="addSelected" type="button" disabled>Add to set</button>
               <a class="button secondary" id="officialLink" href="#" target="_blank" rel="noreferrer" aria-disabled="true">Official VOD page</a>
             </div>
           </aside>
@@ -120,24 +118,6 @@
         <div class="chapter-layout">
           <div class="chapter-tabs" id="chapterTabs" aria-label="Chapter selector"></div>
           <article class="chapter-reader" id="chapterReader"></article>
-        </div>
-      </section>
-
-      <section class="section-band builder-section" id="builder">
-        <div class="builder-copy">
-          <p class="eyebrow">Takeaway builder</p>
-          <h2>Turn selected talks into a focused agenda.</h2>
-          <p>Use this for a lab meeting, fellow teaching session, or epilepsy surgery conference discussion. Keep the final shared product as authored synthesis, not raw transcript redistribution.</p>
-        </div>
-        <div class="builder-panel">
-          <div class="builder-head">
-            <strong id="selectionCount">0 selected</strong>
-            <button class="text-button" id="clearSelection" type="button">Clear</button>
-          </div>
-          <ul class="selected-list" id="selectedList"></ul>
-          <textarea id="outlineBox" readonly aria-label="Generated discussion outline"></textarea>
-          <button class="button primary full" id="copyOutline" type="button">Copy outline</button>
-          <p class="copy-status" id="copyStatus" role="status"></p>
         </div>
       </section>
     </main>

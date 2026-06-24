@@ -201,8 +201,7 @@ h3 {
 }
 
 .hero-panel,
-.detail-panel,
-.builder-panel {
+.detail-panel {
   border: 1px solid var(--line);
   background: rgba(255, 253, 247, 0.78);
   box-shadow: var(--shadow);
@@ -271,7 +270,6 @@ h3 {
 }
 
 .use-grid p,
-.builder-copy p,
 .detail-panel p,
 .footer p {
   color: var(--muted);
@@ -362,8 +360,7 @@ h3 {
 
 .talk-card:focus-visible,
 .chip:focus-visible,
-.button:focus-visible,
-.text-button:focus-visible {
+.button:focus-visible {
   outline: 3px solid rgba(13, 92, 143, 0.38);
   outline-offset: 2px;
 }
@@ -411,14 +408,6 @@ h3 {
 
 .detail-panel h3 {
   font-size: 1.35rem;
-}
-
-.builder-section {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1.15fr);
-  gap: 2rem;
-  align-items: start;
-  padding-bottom: 5rem;
 }
 
 .section-heading p {
@@ -475,76 +464,6 @@ h3 {
   font-weight: 800;
 }
 
-.builder-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  border-bottom: 1px solid var(--line);
-  padding: 1rem;
-}
-
-.text-button {
-  border: 0;
-  background: transparent;
-  color: var(--blue-dark);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 760;
-}
-
-.selected-list {
-  display: grid;
-  gap: 0.55rem;
-  min-height: 4rem;
-  margin: 0;
-  padding: 1rem;
-  list-style: none;
-}
-
-.selected-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.8rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.5rem;
-  font-size: 0.92rem;
-}
-
-.selected-list button {
-  border: 0;
-  background: transparent;
-  color: var(--coral);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 800;
-}
-
-textarea {
-  display: block;
-  width: calc(100% - 2rem);
-  min-height: 15rem;
-  margin: 0 1rem 1rem;
-  border: 1px solid var(--line);
-  background: var(--white);
-  color: var(--ink);
-  font: 0.9rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  padding: 0.8rem;
-  resize: vertical;
-}
-
-.builder-panel .button {
-  width: calc(100% - 2rem);
-  margin: 0 1rem 1rem;
-}
-
-.copy-status {
-  min-height: 1.2rem;
-  margin: 0 1rem 1rem;
-  color: var(--green);
-  font-size: 0.9rem;
-  font-weight: 720;
-}
-
 .footer {
   display: flex;
   flex-wrap: wrap;
@@ -563,8 +482,7 @@ textarea {
   .hero,
   .catalog-top,
   .catalog-layout,
-  .chapter-layout,
-  .builder-section {
+  .chapter-layout {
     grid-template-columns: 1fr;
   }
 
