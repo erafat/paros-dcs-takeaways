@@ -435,9 +435,7 @@ h3 {
 }
 
 .transcript-status {
-  border-left: 3px solid var(--coral);
   flex: 0 0 auto;
-  padding-left: 0.7rem;
   font-size: 0.86rem;
 }
 
@@ -452,6 +450,7 @@ h3 {
   padding: 0.8rem;
 }
 
+#talkTextBody h5:first-child,
 #talkTextBody p:first-child {
   margin-top: 0;
 }
@@ -460,14 +459,26 @@ h3 {
   margin-bottom: 0;
 }
 
+.transcribed-text ol,
 .transcribed-text ul {
   margin: 0.35rem 0 0;
-  padding-left: 1.1rem;
-  color: var(--muted);
+  padding-left: 1.25rem;
 }
 
 .transcribed-text li + li {
-  margin-top: 0.35rem;
+  margin-top: 0.55rem;
+}
+
+.key-terms,
+.source-note {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.source-note {
+  border-top: 1px solid var(--line);
+  margin-top: 1rem;
+  padding-top: 0.75rem;
 }
 
 .section-heading p {

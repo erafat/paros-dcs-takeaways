@@ -83,22 +83,33 @@ function renderTalkText(talk) {
   const note = talkTexts.get(talk.id);
   if (!note) {
     els.talkTextTitle.textContent = "Text not available";
-    els.talkTextStatus.textContent = "No transcript-derived reading guide is available for this talk yet.";
+    els.talkTextStatus.textContent = "No chapter note is available for this talk yet.";
     els.talkTextBody.innerHTML = "";
     return;
   }
 
-  els.talkTextTitle.textContent = note.heading;
-  els.talkTextStatus.textContent = note.status;
-  const terms = note.keyTerms.length ? `<p><strong>Key terms:</strong> ${note.keyTerms.map(escapeHtml).join(", ")}</p>` : "";
+  const mainPoints = Array.isArray(note.mainPoints) ? note.mainPoints : [];
+  const takeaways = Array.isArray(note.clinicalTakeaways) ? note.clinicalTakeaways : [];
+  const terms = Array.isArray(note.keyTerms) && note.keyTerms.length ? `<p class="key-terms"><strong>Terms to track:</strong> ${note.keyTerms.map(escapeHtml).join(", ")}</p>` : "";
+
+  els.talkTextTitle.textContent = note.heading || `${talk.title} | ${talk.speaker}`;
+  els.talkTextStatus.textContent = "Transcript-derived chapter note";
   els.talkTextBody.innerHTML = `
-    <p>${escapeHtml(note.chapterFrame)}</p>
-    ${note.readerText.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+    ${note.overview ? `<h5>Overview</h5><p>${escapeHtml(note.overview)}</p>` : ""}
+    ${mainPoints.length ? `
+      <h5>Main points</h5>
+      <ol>
+        ${mainPoints.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ol>
+    ` : ""}
+    ${takeaways.length ? `
+      <h5>Clinical takeaways</h5>
+      <ul>
+        ${takeaways.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    ` : ""}
     ${terms}
-    <h5>How to use this reading note</h5>
-    <ul>
-      ${note.clinicalUse.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-    </ul>
+    ${note.sourceNote ? `<p class="source-note">${escapeHtml(note.sourceNote)}</p>` : ""}
   `;
 }
 
