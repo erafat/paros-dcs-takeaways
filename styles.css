@@ -410,6 +410,39 @@ h3 {
   font-size: 1.35rem;
 }
 
+.transcribed-text {
+  border-top: 1px solid var(--line);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.transcribed-text h4 {
+  margin: 0 0 0.55rem;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.transcribed-text h5 {
+  margin: 1rem 0 0.4rem;
+  font-size: 0.9rem;
+}
+
+.transcript-status {
+  border-left: 3px solid var(--coral);
+  padding-left: 0.7rem;
+  font-size: 0.86rem;
+}
+
+.transcribed-text ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.transcribed-text li + li {
+  margin-top: 0.35rem;
+}
+
 .section-heading p {
   max-width: 720px;
 }

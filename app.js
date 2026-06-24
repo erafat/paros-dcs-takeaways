@@ -1,5 +1,6 @@
 const talks = window.PAROS_VOD_CATALOG || [];
 const chapters = window.PAROS_CHAPTERS || [];
+const talkTexts = new Map((window.PAROS_TALK_TEXTS || []).map((note) => [note.id, note]));
 
 const state = {
   filter: "all",
@@ -16,6 +17,9 @@ const els = {
   detailMeta: document.querySelector("#detailMeta"),
   detailPrompt: document.querySelector("#detailPrompt"),
   officialLink: document.querySelector("#officialLink"),
+  talkTextTitle: document.querySelector("#talkTextTitle"),
+  talkTextStatus: document.querySelector("#talkTextStatus"),
+  talkTextBody: document.querySelector("#talkTextBody"),
   chapterTabs: document.querySelector("#chapterTabs"),
   chapterReader: document.querySelector("#chapterReader"),
 };
@@ -72,6 +76,30 @@ function chooseTalk(talk) {
   els.detailPrompt.textContent = talk.usePrompt;
   els.officialLink.href = talk.pageUrl;
   els.officialLink.setAttribute("aria-disabled", "false");
+  renderTalkText(talk);
+}
+
+function renderTalkText(talk) {
+  const note = talkTexts.get(talk.id);
+  if (!note) {
+    els.talkTextTitle.textContent = "Text not available";
+    els.talkTextStatus.textContent = "No transcript-derived reading guide is available for this talk yet.";
+    els.talkTextBody.innerHTML = "";
+    return;
+  }
+
+  els.talkTextTitle.textContent = note.heading;
+  els.talkTextStatus.textContent = note.status;
+  const terms = note.keyTerms.length ? `<p><strong>Key terms:</strong> ${note.keyTerms.map(escapeHtml).join(", ")}</p>` : "";
+  els.talkTextBody.innerHTML = `
+    <p>${escapeHtml(note.chapterFrame)}</p>
+    ${note.readerText.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+    ${terms}
+    <h5>How to use this reading note</h5>
+    <ul>
+      ${note.clinicalUse.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+    </ul>
+  `;
 }
 
 function renderChapters() {
