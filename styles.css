@@ -485,56 +485,6 @@ h3 {
   max-width: 720px;
 }
 
-.chapter-layout {
-  display: grid;
-  grid-template-columns: minmax(260px, 0.36fr) minmax(0, 0.64fr);
-  gap: 1rem;
-  align-items: start;
-}
-
-.chapter-tabs {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.chapter-tab {
-  border: 1px solid var(--line);
-  background: rgba(255, 253, 247, 0.8);
-  color: var(--ink);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 760;
-  padding: 0.8rem;
-  text-align: left;
-}
-
-.chapter-tab.active {
-  border-color: var(--blue-dark);
-  background: var(--blue-dark);
-  color: var(--white);
-}
-
-.chapter-reader {
-  border: 1px solid var(--line);
-  background: rgba(255, 253, 247, 0.85);
-  box-shadow: var(--shadow);
-  padding: 1.2rem;
-}
-
-.chapter-reader h3 {
-  margin-bottom: 0.7rem;
-  font-size: clamp(1.35rem, 2vw, 2rem);
-}
-
-.chapter-reader p {
-  color: #465057;
-}
-
-.chapter-reader .chapter-meta {
-  color: var(--blue-dark);
-  font-weight: 800;
-}
-
 .footer {
   display: flex;
   flex-wrap: wrap;
@@ -552,8 +502,7 @@ h3 {
 @media (max-width: 980px) {
   .hero,
   .catalog-top,
-  .catalog-layout,
-  .chapter-layout {
+  .catalog-layout {
     grid-template-columns: 1fr;
   }
 

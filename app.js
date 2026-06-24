@@ -1,5 +1,4 @@
 const talks = window.PAROS_VOD_CATALOG || [];
-const chapters = window.PAROS_CHAPTERS || [];
 const talkTexts = new Map((window.PAROS_TALK_TEXTS || []).map((note) => [note.id, note]));
 
 const state = {
@@ -20,8 +19,6 @@ const els = {
   talkTextTitle: document.querySelector("#talkTextTitle"),
   talkTextStatus: document.querySelector("#talkTextStatus"),
   talkTextBody: document.querySelector("#talkTextBody"),
-  chapterTabs: document.querySelector("#chapterTabs"),
-  chapterReader: document.querySelector("#chapterReader"),
 };
 
 function normalized(text) {
@@ -83,7 +80,7 @@ function renderTalkText(talk) {
   const note = talkTexts.get(talk.id);
   if (!note) {
     els.talkTextTitle.textContent = "Text not available";
-    els.talkTextStatus.textContent = "No chapter note is available for this talk yet.";
+    els.talkTextStatus.textContent = "No mapped transcript text is available for this talk yet.";
     els.talkTextBody.innerHTML = "";
     return;
   }
@@ -93,7 +90,7 @@ function renderTalkText(talk) {
   const terms = Array.isArray(note.keyTerms) && note.keyTerms.length ? `<p class="key-terms"><strong>Terms to track:</strong> ${note.keyTerms.map(escapeHtml).join(", ")}</p>` : "";
 
   els.talkTextTitle.textContent = note.heading || `${talk.title} | ${talk.speaker}`;
-  els.talkTextStatus.textContent = "Transcript-derived chapter note";
+  els.talkTextStatus.textContent = "Mapped transcript text";
   els.talkTextBody.innerHTML = `
     ${note.overview ? `<h5>Overview</h5><p>${escapeHtml(note.overview)}</p>` : ""}
     ${mainPoints.length ? `
@@ -110,36 +107,6 @@ function renderTalkText(talk) {
     ` : ""}
     ${terms}
     ${note.sourceNote ? `<p class="source-note">${escapeHtml(note.sourceNote)}</p>` : ""}
-  `;
-}
-
-function renderChapters() {
-  if (!els.chapterTabs || !els.chapterReader || !chapters.length) return;
-
-  els.chapterTabs.innerHTML = "";
-  chapters.forEach((chapter, index) => {
-    const button = document.createElement("button");
-    button.className = `chapter-tab${index === 0 ? " active" : ""}`;
-    button.type = "button";
-    button.textContent = chapter.title;
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".chapter-tab").forEach((tab) => tab.classList.remove("active"));
-      button.classList.add("active");
-      renderChapterReader(chapter);
-    });
-    els.chapterTabs.appendChild(button);
-  });
-
-  renderChapterReader(chapters[0]);
-}
-
-function renderChapterReader(chapter) {
-  els.chapterReader.innerHTML = `
-    <p class="eyebrow">Draft chapter · ${chapter.talks} talks</p>
-    <h3>${escapeHtml(chapter.title)}</h3>
-    <p class="chapter-meta">${escapeHtml(chapter.thesis)}</p>
-    <p>${escapeHtml(chapter.text)}</p>
-    <p><strong>Best use:</strong> ${escapeHtml(chapter.use)}</p>
   `;
 }
 
@@ -165,4 +132,3 @@ for (const chip of els.filters) {
 }
 
 renderCatalog();
-renderChapters();
