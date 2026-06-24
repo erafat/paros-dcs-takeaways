@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PAROS DCS Takeaways</title>
+    <meta name="description" content="A shareable, interactive catalog for PAROS Epilepsy 2026 DCS during SEEG learning and discussion.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="#top" aria-label="PAROS DCS Takeaways home">
+          <span class="brand-mark" aria-hidden="true">DCS</span>
+          <span>PAROS Takeaways</span>
+        </a>
+        <div class="nav-links">
+          <a href="#catalog">Catalog</a>
+          <a href="#chapters">Chapters</a>
+          <a href="#use">How to use</a>
+          <a href="#builder">Takeaway builder</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">PAROS Epilepsy 2026</p>
+          <h1>Direct cortical stimulation during SEEG, organized for clinical use.</h1>
+          <p class="lede">A lightweight colleague-facing map of 56 VOD talks: foundations, elicited symptoms, ROI patterns, guidelines, data sharing, and ongoing projects.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#catalog">Browse the talks</a>
+            <a class="button secondary" href="#builder">Build a discussion set</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Collection summary">
+          <div class="stat"><strong>56</strong><span>indexed talks</span></div>
+          <div class="stat"><strong>5</strong><span>conference days</span></div>
+          <div class="stat"><strong>10</strong><span>short communications</span></div>
+          <p>Raw videos and transcripts are not redistributed here. This site is a navigation and teaching layer.</p>
+        </aside>
+      </section>
+
+      <section class="section-band" id="use">
+        <div class="section-heading">
+          <p class="eyebrow">How to use this</p>
+          <h2>Pick a learning mode before picking talks.</h2>
+        </div>
+        <div class="use-grid">
+          <article>
+            <span>01</span>
+            <h3>Protocol review</h3>
+            <p>Start with safety, elicited discharges, seizure induction, and current recommendations. Use the selection as a local checklist against your stimulation protocol.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Semiology atlas</h3>
+            <p>Filter by symptom type or ROI. Build a compact comparison set for a patient, localization hypothesis, or conference teaching case.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Journal club</h3>
+            <p>Use the short communications block to surface new research questions, methods, and multicenter collaboration ideas.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Team discussion</h3>
+            <p>Select 3-7 talks, copy the generated discussion outline, and use it as the agenda for a focused epilepsy surgery team session.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="catalog">
+        <div class="catalog-top">
+          <div>
+            <p class="eyebrow">Catalog</p>
+            <h2>Find the right talk quickly.</h2>
+          </div>
+          <label class="search">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Try insula, safety, pediatric, language..." autocomplete="off">
+          </label>
+        </div>
+
+        <div class="filters" aria-label="Catalog filters">
+          <button class="chip active" data-filter="all" type="button">All</button>
+          <button class="chip" data-filter="Foundations" type="button">Foundations</button>
+          <button class="chip" data-filter="Symptoms by type" type="button">Symptoms by type</button>
+          <button class="chip" data-filter="Regions of interest" type="button">ROI</button>
+          <button class="chip" data-filter="Guidelines and data sharing" type="button">Guidelines/data</button>
+          <button class="chip" data-filter="Short communications" type="button">Short communications</button>
+        </div>
+
+        <div class="catalog-layout">
+          <div>
+            <div class="results-line" id="resultsLine"></div>
+            <div class="talk-grid" id="talkGrid" aria-live="polite"></div>
+          </div>
+          <aside class="detail-panel" id="detailPanel" aria-label="Selected talk details">
+            <p class="eyebrow">Selected talk</p>
+            <h3 id="detailTitle">Choose a talk</h3>
+            <p id="detailMeta">Click any card to see how it can fit a teaching or discussion plan.</p>
+            <p id="detailPrompt"></p>
+            <div class="detail-actions">
+              <button class="button primary" id="addSelected" type="button" disabled>Add to set</button>
+              <a class="button secondary" id="officialLink" href="#" target="_blank" rel="noreferrer" aria-disabled="true">Official VOD page</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-band chapters-section" id="chapters">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter drafts</p>
+          <h2>Readable synthesis from the private transcripts.</h2>
+          <p>These texts are draft, transcript-derived, and expert-review-needed. They are written as paraphrased teaching notes, not raw transcript excerpts.</p>
+        </div>
+        <div class="chapter-layout">
+          <div class="chapter-tabs" id="chapterTabs" aria-label="Chapter selector"></div>
+          <article class="chapter-reader" id="chapterReader"></article>
+        </div>
+      </section>
+
+      <section class="section-band builder-section" id="builder">
+        <div class="builder-copy">
+          <p class="eyebrow">Takeaway builder</p>
+          <h2>Turn selected talks into a focused agenda.</h2>
+          <p>Use this for a lab meeting, fellow teaching session, or epilepsy surgery conference discussion. Keep the final shared product as authored synthesis, not raw transcript redistribution.</p>
+        </div>
+        <div class="builder-panel">
+          <div class="builder-head">
+            <strong id="selectionCount">0 selected</strong>
+            <button class="text-button" id="clearSelection" type="button">Clear</button>
+          </div>
+          <ul class="selected-list" id="selectedList"></ul>
+          <textarea id="outlineBox" readonly aria-label="Generated discussion outline"></textarea>
+          <button class="button primary full" id="copyOutline" type="button">Copy outline</button>
+          <p class="copy-status" id="copyStatus" role="status"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Prepared as a shareable navigation and synthesis layer for PAROS Epilepsy 2026 DCS during SEEG materials.</p>
+      <p>Raw videos and transcripts require appropriate permission before redistribution.</p>
+    </footer>
+
+    <script src="assets/vod-catalog.js"></script>
+    <script src="assets/chapter-texts.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
