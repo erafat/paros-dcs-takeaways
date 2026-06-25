@@ -1,5 +1,6 @@
 const talks = window.PAROS_VOD_CATALOG || [];
 const talkTexts = new Map((window.PAROS_TALK_TEXTS || []).map((note) => [note.id, note]));
+const mobileDetails = window.matchMedia("(max-width: 980px)");
 
 const state = {
   filter: "all",
@@ -16,6 +17,8 @@ const els = {
   detailMeta: document.querySelector("#detailMeta"),
   detailPrompt: document.querySelector("#detailPrompt"),
   officialLink: document.querySelector("#officialLink"),
+  detailHome: document.querySelector("#detailHome"),
+  detailPanel: document.querySelector("#detailPanel"),
   talkTextTitle: document.querySelector("#talkTextTitle"),
   talkTextStatus: document.querySelector("#talkTextStatus"),
   talkTextBody: document.querySelector("#talkTextBody"),
@@ -50,6 +53,10 @@ function renderCatalog() {
     const card = document.createElement("button");
     card.className = "talk-card";
     card.type = "button";
+    card.dataset.talkId = talk.id;
+    if (state.selectedTalk?.id === talk.id) {
+      card.classList.add("active");
+    }
     card.innerHTML = `
       <img class="thumb" src="${talk.thumbnailUrl}" alt="" loading="lazy">
       <span class="talk-body">
@@ -64,6 +71,8 @@ function renderCatalog() {
     card.addEventListener("click", () => chooseTalk(talk));
     els.grid.appendChild(card);
   }
+
+  placeDetailPanel();
 }
 
 function chooseTalk(talk) {
@@ -74,6 +83,32 @@ function chooseTalk(talk) {
   els.officialLink.href = talk.pageUrl;
   els.officialLink.setAttribute("aria-disabled", "false");
   renderTalkText(talk);
+  renderCatalog();
+  placeDetailPanel({ reveal: true });
+}
+
+function placeDetailPanel(options = {}) {
+  if (!els.detailHome || !els.detailPanel) return;
+
+  if (!mobileDetails.matches || !state.selectedTalk) {
+    els.detailHome.appendChild(els.detailPanel);
+    return;
+  }
+
+  const selectedCard = [...els.grid.querySelectorAll(".talk-card")]
+    .find((card) => card.dataset.talkId === String(state.selectedTalk.id));
+
+  if (!selectedCard) {
+    els.detailHome.appendChild(els.detailPanel);
+    return;
+  }
+
+  selectedCard.insertAdjacentElement("afterend", els.detailPanel);
+  if (options.reveal) {
+    requestAnimationFrame(() => {
+      els.detailPanel.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    });
+  }
 }
 
 function renderTalkText(talk) {
@@ -132,3 +167,4 @@ for (const chip of els.filters) {
 }
 
 renderCatalog();
+mobileDetails.addEventListener("change", () => placeDetailPanel());

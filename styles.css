@@ -336,6 +336,11 @@ h3 {
   text-align: left;
 }
 
+.talk-card.active {
+  border-color: var(--blue-dark);
+  box-shadow: 0 0 0 2px rgba(13, 92, 143, 0.14);
+}
+
 .talk-card:focus-visible,
 .chip:focus-visible,
 .button:focus-visible {
@@ -385,6 +390,10 @@ h3 {
   position: sticky;
   top: 5.2rem;
   padding: 1rem;
+}
+
+.detail-home {
+  min-width: 0;
 }
 
 .detail-panel h3 {
@@ -494,8 +503,13 @@ h3 {
 
   .detail-panel {
     display: block;
+    grid-column: 1 / -1;
     max-height: none;
     position: static;
+  }
+
+  .detail-home:empty {
+    display: none;
   }
 
   #talkTextBody {
